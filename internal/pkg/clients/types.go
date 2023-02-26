@@ -15,20 +15,24 @@ type event struct {
 		ID    string   `json:"id"`
 		Flags []string `json:"flags"`
 		Teams []struct {
-			Name   string `json:"name"`
-			Code   string `json:"code"`
-			Image  string `json:"image"`
-			Result struct {
-				Outcome  string `json:"outcome"`
-				GameWins int    `json:"gameWins"`
-			} `json:"result"`
-			Record struct {
-				Wins   int `json:"wins"`
-				Losses int `json:"losses"`
-			} `json:"record"`
+			Name   string          `json:"name"`
+			Code   string          `json:"code"`
+			Image  string          `json:"image"`
+			Result MatchTeamResult `json:"result"`
+			Record MatchTeamRecord `json:"record"`
 		} `json:"teams"`
 		Strategy MatchStrategy `json:"strategy"`
 	} `json:"match"`
+}
+
+type MatchTeamResult struct {
+	Outcome  string `json:"outcome"`
+	GameWins int    `json:"gameWins"`
+}
+
+type MatchTeamRecord struct {
+	Wins   int `json:"wins"`
+	Losses int `json:"losses"`
 }
 
 type MatchStrategy struct {

@@ -5,6 +5,7 @@ import "strings"
 type CalendarRequest struct {
 	Leagues  []string `schema:"leagues"`
 	FavTeams []string `schema:"teams"`
+	Spoiler  bool     `schema:"spoiler"`
 }
 
 func (r *CalendarRequest) Normalize() {
