@@ -37,8 +37,8 @@ func (a *App) CalendarHandler(req types.CalendarRequest) ([]byte, error) {
 
 		event := ics.NewEvent(e.ID)
 		event.SetStartAt(e.StartTime)
-		event.SetSummary(fmt.Sprintf("%s %s: %s vs %s", e.LeagueName, e.WeekName, e.T1, e.T2))
-		event.SetEndAt(e.StartTime.Add(1 * time.Hour))
+		event.SetSummary(fmt.Sprintf("%s %s: %s vs %s (%s)", e.LeagueName, e.WeekName, e.T1, e.T2, e.MatchStrategy.ToString()))
+		event.SetEndAt(e.StartTime.Add(time.Duration(e.MatchStrategy.Count) * time.Hour))
 		event.SetDtStampTime(time.Now())
 		if e.HasVod {
 			event.SetDescription(fmt.Sprintf("game completed: find vod here: https://lolesports.com/vod/%s/1/", e.ID))

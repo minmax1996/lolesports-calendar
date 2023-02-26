@@ -105,6 +105,10 @@ func (c *LolEsportsClient) GetSchedule(leagues []string) ([]types.Event, error) 
 					T1:         e.Match.Teams[0].Code,
 					T2:         e.Match.Teams[1].Code,
 					HasVod:     common.Contains(e.Match.Flags, "hasVod"),
+					MatchStrategy: types.MatchStrategy{
+						Type:  e.Match.Strategy.Type,
+						Count: e.Match.Strategy.Count,
+					},
 				})
 			}
 		}
