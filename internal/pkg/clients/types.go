@@ -27,11 +27,13 @@ type event struct {
 				Losses int `json:"losses"`
 			} `json:"record"`
 		} `json:"teams"`
-		Strategy struct {
-			Type  string `json:"type"`
-			Count int    `json:"count"`
-		} `json:"strategy"`
+		Strategy MatchStrategy `json:"strategy"`
 	} `json:"match"`
+}
+
+type MatchStrategy struct {
+	Type  string `json:"type"`
+	Count int    `json:"count"`
 }
 
 type getScheduleResponse struct {
