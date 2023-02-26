@@ -41,10 +41,14 @@ func (a *App) CalendarHandler(req types.CalendarRequest) ([]byte, error) {
 		if req.Spoiler && e.HasVod {
 			event.SetSummary(fmt.Sprintf("%s %s: %s %d-%d %s (%s)", e.LeagueName, e.WeekName, e.T1.Code, e.T1.Result.GameWins, e.T2.Result.GameWins, e.T2.Code, e.MatchStrategy.ToString()))
 		}
-		event.SetEndAt(e.StartTime.Add(time.Duration(e.MatchStrategy.Count) * time.Hour))
+		fullDuration := e.MatchStrategy.Count
+		if e.HasVod {
+			fullDuration = e.T1.Result.GameWins + e.T2.Result.GameWins
+		}
+		event.SetEndAt(e.StartTime.Add(time.Duration(fullDuration) * time.Hour))
 		event.SetDtStampTime(time.Now())
 		if e.HasVod {
-			event.SetDescription(fmt.Sprintf("game completed: find vod here: https://lolesports.com/vod/%s/1/", e.ID))
+			event.SetDescription(fmt.Sprintf("games completed: find vod here: https://lolesports.com/vod/%s/1/", e.ID))
 		} else {
 			event.SetDescription(fmt.Sprintf("join live here: https://lolesports.com/live/%[1]s/%[1]s/", strings.ToLower(e.LeagueName)))
 		}
