@@ -30,7 +30,7 @@ type MatchStrategy struct {
 func (ms MatchStrategy) ToString() string {
 	switch ms.Type {
 	case MatchStrategyTypeBestOf:
-		fmt.Sprintf("Bo%d", ms.Count)
+		return fmt.Sprintf("Bo%d", ms.Count)
 	default:
 		return fmt.Sprintf("%s%d", ms.Type, ms.Count)
 	}
