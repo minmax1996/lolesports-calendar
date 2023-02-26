@@ -102,9 +102,21 @@ func (c *LolEsportsClient) GetSchedule(leagues []string) ([]types.Event, error) 
 					LeagueName: e.League.Name,
 					WeekName:   e.BlockName,
 					StartTime:  e.StartTime,
-					T1:         e.Match.Teams[0].Code,
-					T2:         e.Match.Teams[1].Code,
-					HasVod:     common.Contains(e.Match.Flags, "hasVod"),
+					T1: types.Team{
+						Code: e.Match.Teams[0].Code,
+						Result: types.MatchTeamResult{
+							Outcome:  e.Match.Teams[0].Result.Outcome,
+							GameWins: e.Match.Teams[0].Result.GameWins,
+						},
+					},
+					T2: types.Team{
+						Code: e.Match.Teams[1].Code,
+						Result: types.MatchTeamResult{
+							Outcome:  e.Match.Teams[1].Result.Outcome,
+							GameWins: e.Match.Teams[1].Result.GameWins,
+						},
+					},
+					HasVod: common.Contains(e.Match.Flags, "hasVod"),
 					MatchStrategy: types.MatchStrategy{
 						Type:  types.MatchStrategyType(e.Match.Strategy.Type),
 						Count: e.Match.Strategy.Count,

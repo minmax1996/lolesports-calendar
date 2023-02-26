@@ -30,14 +30,17 @@ func (a *App) CalendarHandler(req types.CalendarRequest) ([]byte, error) {
 	cal := ics.NewCalendarFor("name")
 	for _, e := range events {
 		if len(req.FavTeams) > 0 &&
-			!common.Contains(req.FavTeams, e.T1) &&
-			!common.Contains(req.FavTeams, e.T2) {
+			!common.Contains(req.FavTeams, e.T1.Code) &&
+			!common.Contains(req.FavTeams, e.T2.Code) {
 			continue
 		}
 
 		event := ics.NewEvent(e.ID)
 		event.SetStartAt(e.StartTime)
-		event.SetSummary(fmt.Sprintf("%s %s: %s vs %s (%s)", e.LeagueName, e.WeekName, e.T1, e.T2, e.MatchStrategy.ToString()))
+		event.SetSummary(fmt.Sprintf("%s %s: %s vs %s (%s)", e.LeagueName, e.WeekName, e.T1.Code, e.T2.Code, e.MatchStrategy.ToString()))
+		if req.Spoiler && e.HasVod {
+			event.SetSummary(fmt.Sprintf("%s %s: %s %d-%d %s (%s)", e.LeagueName, e.WeekName, e.T1.Code, e.T1.Result.GameWins, e.T2.Result.GameWins, e.T2.Code, e.MatchStrategy.ToString()))
+		}
 		event.SetEndAt(e.StartTime.Add(time.Duration(e.MatchStrategy.Count) * time.Hour))
 		event.SetDtStampTime(time.Now())
 		if e.HasVod {

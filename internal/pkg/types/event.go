@@ -10,10 +10,20 @@ type Event struct {
 	LeagueName    string        `json:"league_name"`
 	WeekName      string        `json:"week_name"`
 	StartTime     time.Time     `json:"start_time"`
-	T1            string        `json:"t1"`
-	T2            string        `json:"t2"`
+	T1            Team          `json:"t1"`
+	T2            Team          `json:"t2"`
 	HasVod        bool          `json:"has_vod"`
 	MatchStrategy MatchStrategy `json:"match_stategy,omitempty"`
+}
+
+type Team struct {
+	Code   string
+	Result MatchTeamResult
+}
+
+type MatchTeamResult struct {
+	Outcome  string `json:"outcome"`
+	GameWins int    `json:"gameWins"`
 }
 
 type MatchStrategyType string
