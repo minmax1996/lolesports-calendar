@@ -48,5 +48,7 @@ func (rr router) calendarHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
+	w.Header().Add("Content-Type", "text/ics")
+	w.Header().Set("Content-Disposition", "attachment;filename=calendar.ics")
 	w.Write(cal)
 }
