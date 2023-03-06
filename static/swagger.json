@@ -1,0 +1,65 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Get lolesports calendar file",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/calendar": {
+            "get": {
+                "parameters": [
+                    {
+                        "description": "leagues",
+                        "in": "query",
+                        "name": "leagues",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "lec,lck"
+                    },
+                    {
+                        "description": "teams",
+                        "in": "query",
+                        "name": "teams",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "G2,T1"
+                    },
+                    {
+                        "description": "spoiler",
+                        "in": "query",
+                        "name": "spoiler",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "example": "false"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "text/ics": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "ics"
+                                },
+                                "example": "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//name//Golang ICS Library\nBEGIN:VEVENT\nEND:VEVENT\nEND:VCALENDAR"
+                            }
+                        },
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    }
+}
